@@ -26,23 +26,27 @@ class ProductController extends Controller
         
     }
 
-    public function show(Request $request) {
-        $categoryId = $request->input('category_id');
-        $productId = $request->input('product_id');
-
-        if ($categoryId) {
-            $products = Product::where('category_id', $categoryId)->get();
-            return response()->json($products, 200);
-        } elseif ($productId) {
+    public function show($productId) {
+    
             $product = Product::find($productId);
             if ($product) {
                 return response()->json($product, 200);
             } else {
                 return response()->json(['error' => 'Product not found'], 404);
             }
-        }
-        return response()->json(['error' => 'Please provide either category_id or product_id'], 400);
+        return response()->json(['error' => 'Please provide product_id'], 400);
     }
+
+    public function getByCategory($categoryId) {
+    
+        $products = Product::where('category_id',$categoryId)->get();
+        if ($products) {
+            return response()->json($products, 200);
+        } else {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+    return response()->json(['error' => 'Please provide product_id'], 400);
+}
 
     public function update(UpdateProductRequest $request, $productId) {
         $product = Product::find($productId);

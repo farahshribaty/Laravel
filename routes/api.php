@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('products', ProductController::class);
-Route::get('getProductsByCategoryId', [ProductController::class]);
+Route::get('getByCategoryId/{categoryId}', [ProductController::class,'getByCategory']);
 
 Route::apiResource('roles', RoleController::class);
 Route::apiResource('permissions', PermissionController::class);
